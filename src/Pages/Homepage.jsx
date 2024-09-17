@@ -76,7 +76,7 @@ const Homepage = () => {
       <div
         className={`md:w-[80%] mt-6 ${
           mode != null ? "bg-white" : "bg-[#292929]"
-        } flex px-2 gap-4 py-2 rounded-2xl relative max-md:fixed max-md:bottom-2`}
+        } flex px-2 gap-4 py-2 rounded-2xl relative max-md:fixed max-md:bottom-12 max-md:scale-90`}
       >
         <div
           className={`absolute h-full top-0 py-2 flex gap-5 ${
