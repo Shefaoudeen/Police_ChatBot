@@ -63,12 +63,14 @@ const Homepage = () => {
     <div className="flex flex-col gap-4 text-center justify-center items-center w-screen py-5">
       {displayHome ? (
         <div className="flex flex-col justify-center items-center gap-5">
-          <h1 className="font-bold md:text-4xl text-2xl">
-            How can I help you ?
-          </h1>
+          <div className="bg-gradient-to-tr from-green-600 via-green-300 to-white bg-clip-text">
+            <h1 className="font-bold md:text-4xl text-2xl text-transparent">
+              How can I help you ?
+            </h1>
+          </div>
           <h1 className="text-slate-200 max-md:text-xs max-md:w-[75%]">
             Hi I'm JAC. Your jucial companion.{" "}
-            {mode == null ? "" : queries[mode]}
+            {mode == null ? "" : queries[mode - 1]}
           </h1>
           <div className="flex justify-center max-w-[80%] md:gap-10 max-md:flex-col max-md:gap-5">
             <div
@@ -224,7 +226,7 @@ const Homepage = () => {
           <button
             className="h-full w-[50px] bg-green-600 rounded-xl hover:bg-green-500 duration-200 transition-all"
             onClick={() => {
-              SetMode(0);
+              SetMode(1);
               SetModeButton(false);
             }}
           >
@@ -233,7 +235,7 @@ const Homepage = () => {
           <button
             className="h-full w-[50px] bg-green-600 hover:bg-green-500 duration-200 transition-all rounded-xl"
             onClick={() => {
-              SetMode(1);
+              SetMode(2);
               SetModeButton(false);
             }}
           >
@@ -242,7 +244,7 @@ const Homepage = () => {
           <button
             className="h-full w-[50px] bg-green-600 rounded-xl hover:bg-green-500 duration-200 transition-all"
             onClick={() => {
-              SetMode(2);
+              SetMode(3);
               SetModeButton(false);
             }}
           >
