@@ -1,28 +1,35 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
   const [mode, SetMode] = useState(null);
   const [sectionId, SetSectionId] = useState(null);
   const [modeButton, SetModeButton] = useState(false);
   const [inputField, SetInputField] = useState(false);
-  const [propts, Setpropts] = useState({});
+  const [propts, Setpropts] = useState([]);
   const [inputPropts, SetInputPropts] = useState("");
   const [displayHome, SetDisplayHome] = useState(true);
 
   const chumma = [
     {
       section_number: "421",
-      alternative: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
+      alternatives: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
     },
     {
       section_number: "421",
-      alternative: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
+      alternatives: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
     },
     {
       section_number: "421",
-      alternative: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
+      alternatives: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
     },
+  ];
+
+  const text_template = [
+    "BNS in Other BNSS and IPC.",
+    "BNSS in Other BNS and BSA.",
+    "BNA in Other BNS and BNSS.",
   ];
 
   const queries = [
@@ -42,8 +49,8 @@ const Homepage = () => {
           `http://localhost:8000/mode-${mode}?section_id=${sectionId}&section_number=${inputPropts}`
         )
         .then((res) => {
-          Setpropts(res.data);
-          console.log(res.data);
+          Setpropts([...propts, res.data]);
+          SetInputPropts("");
         })
         .catch((err) => {
           console.log(err);
@@ -53,7 +60,7 @@ const Homepage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 text-center justify-center items-center w-screen">
+    <div className="flex flex-col gap-4 text-center justify-center items-center w-screen py-5">
       {displayHome ? (
         <div className="flex flex-col justify-center items-center gap-5">
           <h1 className="font-bold md:text-4xl text-2xl">
@@ -147,33 +154,39 @@ const Homepage = () => {
                 format.
               </p>
               <div className={`flex gap-4 ${mode == 3 ? "" : "hidden"}`}>
-                <button
-                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
-                  onClick={() => {
-                    SetSectionId("1");
-                    SetInputField(true);
-                  }}
-                >
-                  BNS
-                </button>
-                <button
-                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
-                  onClick={() => {
-                    SetSectionId("2");
-                    SetInputField(true);
-                  }}
-                >
-                  BNSS
-                </button>
-                <button
-                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
-                  onClick={() => {
-                    SetSectionId("3");
-                    SetInputField(true);
-                  }}
-                >
-                  BSA
-                </button>
+                <Link to="/bnsDetails">
+                  <button
+                    className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                    onClick={() => {
+                      SetSectionId("1");
+                      SetInputField(true);
+                    }}
+                  >
+                    BNS
+                  </button>
+                </Link>
+                <Link to="/bnssDetails">
+                  <button
+                    className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                    onClick={() => {
+                      SetSectionId("2");
+                      SetInputField(true);
+                    }}
+                  >
+                    BNSS
+                  </button>
+                </Link>
+                <Link to="/bsaDetails">
+                  <button
+                    className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                    onClick={() => {
+                      SetSectionId("3");
+                      SetInputField(true);
+                    }}
+                  >
+                    BSA
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -181,14 +194,20 @@ const Homepage = () => {
       ) : (
         <div className="w-full flex justify-center min-h-[50%]">
           <div className="flex flex-col gap-4 w-[50%]">
-            <div className="bg-[#292929] p-4 flex flex-col gap-4 text-start rounded-2xl">
-              <h1 className="font-bold text-xl">{propts.section_number}</h1>
-              <ul className="text-gray-300 ml-5">
-                {propts?.alternatives?.map((subele, subind) => (
-                  <li>{subele}</li>
-                ))}
-              </ul>
-            </div>
+            {propts.map((ele, ind) => (
+              <div className=" p-4 flex flex-col gap-4 text-start rounded-2xl">
+                <h1 className="font-bold bg-[#292929] w-fit p-5 rounded-r-2xl rounded-t-2xl">
+                  {ele.section_number} {text_template[sectionId - 1]}
+                </h1>
+                <div className="flex justify-end">
+                  <ul className="text-gray-300 text-end bg-[#292929] w-fit p-5 rounded-l-2xl rounded-t-2xl">
+                    {ele?.alternatives?.map((subele, subind) => (
+                      <li>{subele}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -244,7 +263,7 @@ const Homepage = () => {
           className={`flex-1 p-3 ${
             inputField ? "bg-white" : "bg-white/5"
           } text-black`}
-          placeholder="Type your prompt here"
+          placeholder={inputField ? "Type your prompt here" : "Select any Mode"}
           value={inputPropts}
           onChange={(e) => SetInputPropts(e.target.value)}
           disabled={!inputField}
