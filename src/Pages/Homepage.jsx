@@ -1,8 +1,29 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Homepage = () => {
   const [mode, SetMode] = useState(null);
+  const [sectionId, SetSectionId] = useState(null);
   const [modeButton, SetModeButton] = useState(false);
+  const [inputField, SetInputField] = useState(false);
+  const [propts, Setpropts] = useState([]);
+  const [inputPropts, SetInputPropts] = useState("");
+  const [displayHome, SetDisplayHome] = useState(true);
+
+  const chumma = [
+    {
+      section_number: "421",
+      alternative: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
+    },
+    {
+      section_number: "421",
+      alternative: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
+    },
+    {
+      section_number: "421",
+      alternative: ["421 in BNS ~ 421 in IPC", "421 in IPC ~ 320 in BNS"],
+    },
+  ];
 
   const queries = [
     "Type your queries related to IPC and BNS and get answered",
@@ -10,72 +31,174 @@ const Homepage = () => {
     "Type your queries related to Comprehensive Legal Comparison and get answered",
   ];
 
+  const handleSubmit = () => {
+    console.log(mode, sectionId, inputPropts);
+    if (mode == "" || sectionId == "" || inputPropts == "") {
+      return;
+    }
+    if (mode == 1) {
+      axios
+        .get(
+          `http://localhost:8000/mode-${mode}?section_id=${sectionId}&section_number=${inputPropts}`
+        )
+        .then((res) => {
+          Setpropts(...propts, res);
+          console.log(p);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return;
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 text-center justify-center items-center w-screen">
-      <h1 className="font-bold md:text-4xl text-2xl">How can I help you ?</h1>
-      <h1 className="text-slate-200 max-md:text-xs max-md:w-[75%]">
-        Hi I'm JAC. Your jucial companion. {mode == null ? "" : queries[mode]}
-      </h1>
-      <div className="flex max-w-[80%] md:gap-10 max-md:flex-col max-md:gap-5">
-        <div
-          className={` ${
-            mode == 0 ? "border-4" : "border-2"
-          } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] md:min-h-[275px] max-md:max-w-[100%] `}
-          onClick={() => SetMode(0)}
-        >
-          <h1 className="font-bold md:text-2xl">IPC and BNS Conversion</h1>
-          <p className="flex-1 text-justify max-md:text-xs">
-            A concise guide comparing the Indian Penal Code (IPC) and the BNS,
-            highlighting key laws, punishments, and legal provisions.
-          </p>
-          <div className={`flex ${mode == 0 ? "" : "hidden"}`}>
-            <button className="bg-white text-[#292929] py-2 px-4 rounded-full">
-              Know More
-            </button>
-          </div>
-        </div>
-        <div
-          className={` ${
-            mode == 1 ? "border-4" : "border-2"
-          } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] max-md:max-w-[100%]`}
-          onClick={() => SetMode(1)}
-        >
-          <h1 className="font-bold md:text-2xl">Instant Legal Aid</h1>
-          <p className="flex-1 text-justify max-md:text-xs">
-            A tool that identifies the closest and most relevant law based on
-            user input, whether in text, voice, or image form. It provides
-            immediate legal guidance tailored to your specific situation.
-          </p>
-          <div className={`flex ${mode == 1 ? "" : "hidden"}`}>
-            <button className="bg-white text-[#292929] py-2 px-4 rounded-full">
-              Know More
-            </button>
-          </div>
-        </div>
-        <div
-          className={` ${
-            mode == 2 ? "border-4" : "border-2"
-          } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] max-md:max-w-[100%] `}
-          onClick={() => SetMode(2)}
-        >
-          <h1 className="font-bold md:text-2xl">
-            Comprehensive Legal Comparison
+      {displayHome ? (
+        <div className="flex flex-col justify-center items-center gap-5">
+          <h1 className="font-bold md:text-4xl text-2xl">
+            How can I help you ?
           </h1>
-          <p className="flex-1 text-justify max-md:text-xs">
-            A detailed comparison of BNS, BNSS, and BSA, listing laws,
-            corresponding sections, and punishments in a structured table
-            format.
-          </p>
-          <div className={`flex ${mode == 2 ? "" : "hidden"}`}>
-            <button className="bg-white text-[#292929] py-2 px-4 rounded-full">
-              Know More
-            </button>
+          <h1 className="text-slate-200 max-md:text-xs max-md:w-[75%]">
+            Hi I'm JAC. Your jucial companion.{" "}
+            {mode == null ? "" : queries[mode]}
+          </h1>
+          <div className="flex justify-center max-w-[80%] md:gap-10 max-md:flex-col max-md:gap-5">
+            <div
+              className={` ${
+                mode == 1 ? "border-4" : "border-2"
+              } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] md:min-h-[275px] max-md:max-w-[100%] `}
+              onClick={() => {
+                SetMode(1);
+              }}
+            >
+              <h1 className="font-bold md:text-2xl">IPC and BNS Conversion</h1>
+              <p className="flex-1 text-justify max-md:text-xs">
+                A concise guide comparing the Indian Penal Code (IPC) and the
+                BNS, highlighting key laws, punishments, and legal provisions.
+              </p>
+              <div className={`flex gap-4 ${mode == 1 ? "" : "hidden"}`}>
+                <button
+                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                  onClick={() => {
+                    SetSectionId(1);
+                    SetSectionId(1);
+                    SetInputField(true);
+                  }}
+                >
+                  BNS
+                </button>
+                <button
+                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                  onClick={() => {
+                    SetSectionId(2);
+                    SetInputField(true);
+                  }}
+                >
+                  BNSS
+                </button>
+                <button
+                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                  onClick={() => {
+                    SetSectionId(3);
+                    SetInputField(true);
+                  }}
+                >
+                  BSA
+                </button>
+              </div>
+            </div>
+            <div
+              className={` ${
+                mode == 2 ? "border-4" : "border-2"
+              } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] max-md:max-w-[100%]`}
+              onClick={() => {
+                SetMode(2);
+                SetInputField(false);
+              }}
+            >
+              <h1 className="font-bold md:text-2xl">Instant Legal Aid</h1>
+              <p className="flex-1 text-justify max-md:text-xs">
+                A tool that identifies the closest and most relevant law based
+                on user input, whether in text, voice, or image form. It
+                provides immediate legal guidance tailored to your specific
+                situation.
+              </p>
+              <div className={`flex ${mode == 2 ? "" : "hidden"}`}>
+                <button className="bg-white text-[#292929] py-2 px-4 rounded-full">
+                  Know More
+                </button>
+              </div>
+            </div>
+            <div
+              className={` ${
+                mode == 3 ? "border-4" : "border-2"
+              } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] max-md:max-w-[100%] `}
+              onClick={() => {
+                SetMode(3);
+              }}
+            >
+              <h1 className="font-bold md:text-2xl">
+                Comprehensive Legal Comparison
+              </h1>
+              <p className="flex-1 text-justify max-md:text-xs">
+                A detailed comparison of BNS, BNSS, and BSA, listing laws,
+                corresponding sections, and punishments in a structured table
+                format.
+              </p>
+              <div className={`flex gap-4 ${mode == 3 ? "" : "hidden"}`}>
+                <button
+                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                  onClick={() => {
+                    SetSectionId("1");
+                    SetInputField(true);
+                  }}
+                >
+                  BNS
+                </button>
+                <button
+                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                  onClick={() => {
+                    SetSectionId("2");
+                    SetInputField(true);
+                  }}
+                >
+                  BNSS
+                </button>
+                <button
+                  className="bg-white text-[#292929] py-2 px-4 rounded-full"
+                  onClick={() => {
+                    SetSectionId("3");
+                    SetInputField(true);
+                  }}
+                >
+                  BSA
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-full flex justify-center min-h-[50%]">
+          <div className="flex flex-col gap-4 w-[50%]">
+            {propts.map((ele, ind) => {
+              return (
+                <div className="bg-[#292929] p-4 flex flex-col gap-4 text-start rounded-2xl">
+                  <h1 className="font-bold text-xl">{ele.section_number}</h1>
+                  <ul className="text-gray-300 ml-5">
+                    {ele.alternative.map((subele, subind) => {
+                      return <li>{subele}</li>;
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
       <div
-        className={`md:w-[80%] mt-6 ${
-          mode != null ? "bg-white" : "bg-[#292929]"
+        className={`md:w-[80%]  mt-6 ${
+          inputField ? "bg-white" : "bg-[#292929]"
         } flex px-2 gap-4 py-2 rounded-2xl relative max-md:fixed max-md:bottom-12 max-md:scale-90`}
       >
         <div
@@ -123,12 +246,23 @@ const Homepage = () => {
         <input
           type="text"
           className={`flex-1 p-3 ${
-            mode != null ? "bg-white" : "bg-white/5"
+            inputField ? "bg-white" : "bg-white/5"
           } text-black`}
           placeholder="Type your prompt here"
-          disabled={mode == null ? true : false}
+          value={inputPropts}
+          onChange={(e) => SetInputPropts(e.target.value)}
+          disabled={!inputField}
         />
-        <button className="bg-green-400 px-2 rounded-xl">Submit</button>
+        <button
+          className="bg-green-400 px-2 rounded-xl"
+          onClick={() => {
+            handleSubmit();
+            SetDisplayHome(false);
+          }}
+          disabled={!inputField}
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
