@@ -6,7 +6,7 @@ const Homepage = () => {
   const [sectionId, SetSectionId] = useState(null);
   const [modeButton, SetModeButton] = useState(false);
   const [inputField, SetInputField] = useState(false);
-  const [propts, Setpropts] = useState([]);
+  const [propts, Setpropts] = useState({});
   const [inputPropts, SetInputPropts] = useState("");
   const [displayHome, SetDisplayHome] = useState(true);
 
@@ -31,19 +31,19 @@ const Homepage = () => {
     "Type your queries related to Comprehensive Legal Comparison and get answered",
   ];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(mode, sectionId, inputPropts);
     if (mode == "" || sectionId == "" || inputPropts == "") {
       return;
     }
     if (mode == 1) {
-      axios
+      await axios
         .get(
           `http://localhost:8000/mode-${mode}?section_id=${sectionId}&section_number=${inputPropts}`
         )
         .then((res) => {
-          Setpropts(...propts, res);
-          console.log(p);
+          Setpropts(res.data);
+          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -181,18 +181,14 @@ const Homepage = () => {
       ) : (
         <div className="w-full flex justify-center min-h-[50%]">
           <div className="flex flex-col gap-4 w-[50%]">
-            {propts.map((ele, ind) => {
-              return (
-                <div className="bg-[#292929] p-4 flex flex-col gap-4 text-start rounded-2xl">
-                  <h1 className="font-bold text-xl">{ele.section_number}</h1>
-                  <ul className="text-gray-300 ml-5">
-                    {ele.alternative.map((subele, subind) => {
-                      return <li>{subele}</li>;
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
+            <div className="bg-[#292929] p-4 flex flex-col gap-4 text-start rounded-2xl">
+              <h1 className="font-bold text-xl">{propts.section_number}</h1>
+              <ul className="text-gray-300 ml-5">
+                {propts?.alternatives?.map((subele, subind) => (
+                  <li>{subele}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       )}
