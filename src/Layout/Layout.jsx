@@ -7,7 +7,11 @@ const Layout = () => {
   return (
     <div className="flex flex-col h-screen text-white">
       <Navbar />
-      <div className="flex flex-1 bg-black">
+      <div
+        className="flex flex-1 bg-gradient-to-tr from-black
+    via-green-900
+    to-black animated-background"
+      >
         <Outlet />
       </div>
       <Footer />
