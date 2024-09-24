@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { BNS } from "../Data/BNS";
 
 const GetBNSDetails = () => {
-  const [dataLoaded, SetDataLoaded] = useState(true);
+  const [dataLoaded, SetDataLoaded] = useState(false);
   const { id } = useParams();
   const [datas, SetDatas] = useState();
 
@@ -50,7 +50,7 @@ const GetBNSDetails = () => {
         <div className=" w-[50%] p-8 rounded-xl flex flex-col gap-5 items-center justify-center py-[50px]">
           <div className="w-full py-5">
             <div className="flex flex-col gap-4">
-              {chumma.map((ele, ind) => (
+              {datas?.sections.map((ele, ind) => (
                 <div
                   className="bg-[#292929] text-xl max-md:text-sm p-5 transition-all duration-200
               rounded-3xl flex flex-col border gap-3 hover:border-green-400"
