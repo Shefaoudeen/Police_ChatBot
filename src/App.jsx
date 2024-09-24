@@ -4,6 +4,7 @@ import Homepage from "./Pages/Homepage";
 import BNSdetails from "./Pages/BNSdetails";
 import BNSSdetails from "./Pages/BNSSdetails";
 import BSAdetails from "./Pages/BSAdetails";
+import GetBNSDetails from "./Pages/GetBNSDetails";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Homepage />} />
           <Route path="/bnsDetails" element={<BNSdetails />} />
+          <Route path="/bnsDetails/:id" element={<GetBNSDetails />} />
           <Route path="/bnssDetails" element={<BNSSdetails />} />
           <Route path="/bsaDetails" element={<BSAdetails />} />
         </Route>

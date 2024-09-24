@@ -75,7 +75,7 @@ const Homepage = () => {
           <div className="flex justify-center max-w-[80%] md:gap-10 max-md:flex-col max-md:gap-5">
             <div
               className={` ${
-                mode == 1 ? "border-4" : "border-2"
+                mode == 1 ? "border-4" : "border"
               } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] md:min-h-[275px] max-md:max-w-[100%] `}
               onClick={() => {
                 SetMode(1);
@@ -119,7 +119,7 @@ const Homepage = () => {
             </div>
             <div
               className={` ${
-                mode == 2 ? "border-4" : "border-2"
+                mode == 2 ? "border-4" : "border"
               } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] max-md:max-w-[100%]`}
               onClick={() => {
                 SetMode(2);
@@ -141,7 +141,7 @@ const Homepage = () => {
             </div>
             <div
               className={` ${
-                mode == 3 ? "border-4" : "border-2"
+                mode == 3 ? "border-4" : "border"
               } cursor-pointer p-5 flex flex-col gap-5 max-w-[30%] border-green-400 rounded-xl bg-[#292929] max-md:max-w-[100%] `}
               onClick={() => {
                 SetMode(3);
