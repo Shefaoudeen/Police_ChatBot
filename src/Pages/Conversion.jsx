@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { chatBotImg, user } from "../assets";
 
 const Conversion = () => {
   const modes = ["BNS", "IPC", "BNSS", "CRPC", "BSA", "IEA"];
-  const [modeNo, setModeNo] = useState(1);
+  const [modeNo1, setModeNo1] = useState(1);
   const [mode2, setMode2] = useState(2);
   const [code, setCode] = useState("");
-
-  const [lawDescripiton, setLawDescription] = useState(
-    "Enter the Code in the above tab"
-  );
-  const [punishmentDescription, setPunishmentDescription] = useState(
-    "Enter the Code in the above tab"
-  );
-
   const [responses, SetResponse] = useState([]);
-
   const [submitted, SetSubmitted] = useState(false);
 
   useEffect(() => {
-    console.log(modeNo);
-    if (modeNo % 2 == 0) {
-      setMode2(modeNo - 1);
-    } else if (modeNo % 2 == 1) {
-      setMode2(modeNo + 1);
+    console.log(modeNo1);
+    if (modeNo1 % 2 == 0) {
+      setMode2(modeNo1 - 1);
+    } else if (modeNo1 % 2 == 1) {
+      setMode2(modeNo1 + 1);
     }
     console.log(mode2);
-  }, [modeNo]);
+  }, [modeNo1]);
 
-  const handleSumbitButton = (que) => {
+  const handleSumbitButton = () => {
     if (code === "") {
       alert("Enter the Code Field");
       return;
@@ -36,28 +26,26 @@ const Conversion = () => {
     SetSubmitted(true);
     console.log(submitted);
     SetResponse([
-      ...responses,
       {
-        question: que,
-        currentMode: modes[modeNo - 1],
-        nextMode: modes[mode2 - 1],
-        alternative_code:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quia dicta explicabo iusto aut ad nisi eaque deserunt corporis aperiam cum, repellat consequatur nostrum non nulla deleniti culpa ratione dolorum!",
-        law: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quia dicta explicabo iusto aut ad nisi eaque deserunt corporis aperiam cum, repellat consequatur nostrum non nulla deleniti culpa ratione dolorum!",
-        punishment:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quia dicta explicabo iusto aut ad nisi eaque deserunt corporis aperiam cum, repellat consequatur nostrum non nulla deleniti culpa ratione dolorum!",
+        mode1: modes[modeNo1 - 1],
+        mode2: modes[mode2 - 1],
+        code: code,
+        alternative_code: `100`,
+        Crime_description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus vel voluptatum eius, quibusdam, non at doloremque exercitationem perferendis facere itaque rem sequi veritatis quo consequuntur incidunt vitae, omnis amet! Culpa.`,
+        Punishment: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus vel voluptatum eius, quibusdam, non at doloremque exercitationem perferendis facere itaque rem sequi veritatis quo consequuntur incidunt vitae, omnis amet! Culpa.`,
       },
+      ...responses,
     ]);
   };
 
   const swapMode = () => {
-    setModeNo(mode2);
+    setModeNo1(mode2);
   };
 
   return (
-    <div className="flex justify-center items-center w-full  relative py-10">
+    <div className="flex justify-center  w-full  relative py-10">
       <div className="absolute w-screen h-full">
-        <div className="absolute right-10 bottom-10">
+        <div className="absolute right-20 bottom-20">
           <button
             className={`bg-green-400 p-2  rounded-lg ${
               submitted ? "" : "hidden"
@@ -65,7 +53,7 @@ const Conversion = () => {
             onClick={() => {
               SetResponse([]);
               SetSubmitted(false);
-              setModeNo(1);
+              setModeNo1(1);
               setCode("");
             }}
           >
@@ -73,19 +61,19 @@ const Conversion = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-20 max-w-[50%] items-center">
-        <div className="bg-[#171717] px-8 py-4 rounded-xl flex flex-col items-center gap-4 w-min sticky top-[50px]">
-          <h1>Code Conversion</h1>
-          <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-4 max-w-[80%] min-w-[80%] items-center">
+        <div className="bg-[#171717] px-8 py-2 rounded-xl flex flex-col items-center gap-4 w-full sticky top-[50px]">
+          <h1 className="text-xl font-bold">Code Conversion</h1>
+          <div className="flex items-center gap-8">
             <div className="flex gap-4 items-center">
               <label>Mode 1</label>
               <select
                 name="code1"
                 id="code1"
                 className="text-black"
-                value={modeNo}
+                value={modeNo1}
                 onChange={(e) => {
-                  setModeNo(parseInt(e.target.value));
+                  setModeNo1(parseInt(e.target.value));
                 }}
               >
                 <option value="1">BNS</option>
@@ -107,62 +95,63 @@ const Conversion = () => {
                 {modes[mode2 - 1]}
               </div>
             </div>
-          </div>
-          <div className="flex gap-4">
-            <input
-              type="text"
-              value={code}
-              onChange={(e) => {
-                setCode(e.target.value);
-              }}
-              placeholder="Enter the Code"
-              className="p-2 rounded-lg text-black"
-            />
-            <button
-              className="bg-green-400 p-2  rounded-lg"
-              onClick={() => handleSumbitButton(code, modeNo)}
-            >
-              Submit
-            </button>
+            <div className="flex gap-4">
+              <input
+                type="text"
+                value={code}
+                onChange={(e) => {
+                  setCode(e.target.value);
+                }}
+                placeholder="Enter the Code"
+                className="p-2 rounded-lg text-black"
+              />
+              <button
+                className="bg-green-400 p-2  rounded-lg"
+                onClick={() => handleSumbitButton()}
+              >
+                Convert
+              </button>
+            </div>
           </div>
         </div>
-        {/*chat type */}
-        {submitted === true
-          ? responses.map((ele, ind) => (
-              <div className="flex flex-col w-[50vw] gap-4">
-                <div className="flex flex-col w-full gap-4">
-                  <div className=" flex justify-end  gap-4 items-end ">
-                    <div className="bg-[#171717] rounded-l-3xl rounded-tr-3xl p-4">
-                      {ele.question} code in {ele.currentMode}
-                    </div>
-                    <img
-                      src={user}
-                      alt=""
-                      className="max-w-[50px] max-h-[50px] min-w-[50px] min-h-[50px] object-contain p-2 bg-[#4b4b4b] rounded-full overflow-hidden"
-                    />{" "}
-                  </div>
-                  <div className="flex justify-start items-end gap-4 max-w-[80%]">
-                    <img
-                      src={chatBotImg}
-                      alt=""
-                      className="max-w-[50px] max-h-[50px] min-w-[50px] min-h-[50px] object-contain p-2 bg-[#4b4b4b] rounded-full overflow-hidden"
-                    />
-                    <div className="bg-[#171717] rounded-r-3xl rounded-tl-3xl p-4 flex flex-col gap-2">
-                      <h1>
-                        Alternative code in {ele.nextMode} -{" "}
-                        {ele.alternative_code}
-                      </h1>
-                      <h1>Description - {ele.law}</h1>
-                      <h1>Punishmet - {ele.punishment}</h1>
-                      <button className="bg-green-400 p-2 w-fit rounded-lg">
-                        Know More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))
-          : null}
+
+        <div className="flex flex-1 flex-col w-full">
+          <table
+            className={`text-center ${submitted ? "border-separate" : ""}`}
+          >
+            <tr className="bg-[#2b2b2b] text-sm">
+              <th className="w-[7.5%]">Mode 1</th>
+              <th className="w-[7.5%]">Mode 2</th>
+              <th className="w-[7.5%]">Code</th>
+              <th className="w-[7.5%]">Alternative Code</th>
+              <th className="w-[35%]">Crime Description </th>
+              <th className="w-[35%]">Punishment</th>
+            </tr>
+            {submitted ? (
+              responses.map((ele, index) => (
+                <tr className="text-center w-full bg-[#5a5757]" key={index}>
+                  <td className="">{ele?.mode1}</td>
+                  <td className="">{ele?.mode2}</td>
+                  <td className="">{ele?.code}</td>
+                  <td className="py-5">{ele?.alternative_code}</td>
+                  <td className="px-4 py-2 text-justify">
+                    {ele?.Crime_description}
+                  </td>
+                  <td className="px-4 py-2 text-justify">{ele?.Punishment}</td>
+                </tr>
+              ))
+            ) : (
+              <tr className="bg-[#5a5757]">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td className="py-5">--- No Records ---</td>
+                <td></td>
+              </tr>
+            )}
+          </table>
+        </div>
       </div>
     </div>
   );
