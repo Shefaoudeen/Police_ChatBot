@@ -9,7 +9,6 @@ const GetBNSDetails = () => {
   const [dataLoaded, SetDataLoaded] = useState(false);
   const { id } = useParams();
   const [datas, SetDatas] = useState();
-
   useGSAP(() => {
     gsap.to(".msgBox", {
       opacity: "100%",
@@ -18,7 +17,6 @@ const GetBNSDetails = () => {
       yoyo: 1,
     });
   });
-
   const chumma = [
     {
       serial_number: "",
@@ -28,7 +26,6 @@ const GetBNSDetails = () => {
       bns_punishment: "",
     },
   ];
-
   useEffect(() => {
     axios
       .get(`http://localhost:8000/mode-3?section_id=1&sub_section_id=${id}`)
@@ -40,7 +37,6 @@ const GetBNSDetails = () => {
         console.log(err);
       });
   }, []);
-
   return (
     <div className="flex flex-col gap-10 justify-center items-center w-screen">
       <h1 className="font-medium text-2xl">
@@ -52,7 +48,7 @@ const GetBNSDetails = () => {
             <div className="flex flex-col gap-4">
               {datas?.sections.map((ele, ind) => (
                 <div
-                  className="bg-[#292929] text-xl max-md:text-sm p-5 transition-all duration-200
+                  className="bg-[#292929] text-xl max-md:text-sm p-5
               rounded-3xl flex flex-col border gap-3 hover:border-green-400"
                 >
                   <h1>

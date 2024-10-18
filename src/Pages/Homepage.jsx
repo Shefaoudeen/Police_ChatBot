@@ -199,7 +199,7 @@ const Homepage = () => {
             {propts.map((ele, ind) => (
               <div className=" p-4 flex flex-col gap-4 text-start rounded-2xl">
                 <h1 className="font-bold bg-[#292929] w-fit p-5 rounded-r-2xl rounded-t-2xl">
-                  {ele.section_number}
+                  {ele.section_number} {text_template[sectionId - 1]}
                 </h1>
                 <div className="flex justify-end">
                   <ul className="text-gray-300 text-end bg-[#292929] w-fit p-5 rounded-l-2xl rounded-t-2xl">
