@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Home } from "../assets";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const Navbar = () => {
-  const id = useLocation();
+  const loc = useLocation();
+  const { id } = useParams();
   const [isHome, SetisHome] = useState(true);
 
   useEffect(() => {
-    if (id.pathname != "/") SetisHome(false);
+    if (loc.pathname != "/") SetisHome(false);
     else SetisHome(true);
-  }, [id.pathname]);
+    if (loc.pathname == `/bnsDetails/${id}`) console.log("hi");
+  }, [loc.pathname]);
 
   return (
     <div className="bg-[#171717] flex justify-center  items-center relative">

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Conversion = () => {
   const modes = ["BNS", "IPC", "BNSS", "CRPC", "BSA", "IEA"];
@@ -23,19 +24,20 @@ const Conversion = () => {
       alert("Enter the Code Field");
       return;
     }
+    axios
+      .get(
+        `http://localhost:8000/mode-1/?section_id=${
+          modes[modeNo1 - 1]
+        }&sub_section_id=${code}`
+      )
+      .then((res) => {
+        SetResponse([res.data, ...responses]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     SetSubmitted(true);
     console.log(submitted);
-    SetResponse([
-      {
-        mode1: modes[modeNo1 - 1],
-        mode2: modes[mode2 - 1],
-        code: code,
-        alternative_code: `100`,
-        Crime_description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus vel voluptatum eius, quibusdam, non at doloremque exercitationem perferendis facere itaque rem sequi veritatis quo consequuntur incidunt vitae, omnis amet! Culpa.`,
-        Punishment: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus vel voluptatum eius, quibusdam, non at doloremque exercitationem perferendis facere itaque rem sequi veritatis quo consequuntur incidunt vitae, omnis amet! Culpa.`,
-      },
-      ...responses,
-    ]);
   };
 
   const swapMode = () => {
@@ -128,16 +130,42 @@ const Conversion = () => {
               <th className="w-[35%]">Punishment</th>
             </tr>
             {submitted ? (
-              responses.map((ele, index) => (
-                <tr className="text-center w-full bg-[#5a5757]" key={index}>
+              responses?.map((ele, index) => (
+                <tr
+                  className={`text-center w-full ${
+                    ele?.color === null ? "bg-[#5a5757]" : "bg-red-500"
+                  }`}
+                  key={index}
+                >
                   <td className="">{ele?.mode1}</td>
                   <td className="">{ele?.mode2}</td>
-                  <td className="">{ele?.code}</td>
-                  <td className="py-5">{ele?.alternative_code}</td>
-                  <td className="px-4 py-2 text-justify">
-                    {ele?.Crime_description}
+                  <td className="">
+                    {ele?.ipc_section}
+                    {ele?.iea_section}
+                    {ele?.crpc_section}
                   </td>
-                  <td className="px-4 py-2 text-justify">{ele?.Punishment}</td>
+                  <td className="py-5">
+                    {ele?.bns_section}
+                    {ele?.bnss_section}
+                    {ele?.bsa_section}
+                  </td>
+                  <td className="px-4 py-2 text-justify">
+                    {ele?.crime_description}
+                  </td>
+                  <td className="px-4 py-2 text-justify">
+                    <ul>
+                      <li>
+                        {ele?.ipc_punishment}
+                        {ele?.iea_punishment}
+                        {ele?.crpc_punishment}
+                      </li>
+                      <li>
+                        {ele?.bns_punishment}
+                        {ele?.bnss_punishment}
+                        {ele?.bsa_punishment}
+                      </li>
+                    </ul>
+                  </td>
                 </tr>
               ))
             ) : (
