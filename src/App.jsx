@@ -21,6 +21,7 @@ export default function App() {
           <Route path="/bnssDetails" element={<BNSSdetails />} />
           <Route path="/bsaDetails" element={<BSAdetails />} />
           <Route path="/knowAll" element={<KnowAll />} />
+          <Route path="/knowAllDetail/:id" element={<GetBNSDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>

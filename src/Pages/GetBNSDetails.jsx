@@ -27,8 +27,13 @@ const GetBNSDetails = () => {
     },
   ];
   useEffect(() => {
+    let ids = id.toString().split("_");
+    let section_id = ids[0];
+    let subsection_id = ids[1];
     axios
-      .get(`http://localhost:8000/mode-3?section_id=1&sub_section_id=${id}`)
+      .get(
+        `http://localhost:8000/mode-3/?section_id=${section_id}&sub_section_id=${subsection_id}`
+      )
       .then((res) => {
         SetDatas(res.data);
         SetDataLoaded(true);
@@ -40,7 +45,7 @@ const GetBNSDetails = () => {
   return (
     <div className="flex flex-col gap-10 justify-center items-center w-screen">
       <h1 className="font-medium text-2xl">
-        {BNS[Number(id) - 1].Section} - Sub Section {datas?.sub_section_id}
+        {BNS[Number(id) - 1]?.Section} - Sub Section {datas?.sub_section_id}
       </h1>
       {dataLoaded ? (
         <div className=" w-[50%] p-8 rounded-xl flex flex-col gap-5 items-center justify-center py-[50px]">
@@ -50,6 +55,7 @@ const GetBNSDetails = () => {
                 <div
                   className="bg-[#292929] text-xl max-md:text-sm p-5
               rounded-3xl flex flex-col border gap-3 hover:border-green-400"
+                  key={ind}
                 >
                   <h1>
                     <span className="text-green-400">Serial Number :</span>{" "}

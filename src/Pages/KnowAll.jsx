@@ -59,7 +59,7 @@ const KnowAll = () => {
               >
                 <h1>{ele.Section}</h1>
                 <div className="bg-white hover:bg-green-400 cursor-pointer transition-all duration-200 rounded-full w-[30px] h-[30px] text-[#292929] flex justify-center items-center font-extrabold">
-                  <Link to={`/bnsDetails/${ele.Section_id}`}>
+                  <Link to={`/bnsDetails/${modeSeleted}_${ele.Section_id}`}>
                     <img src={arrow} />
                   </Link>
                 </div>

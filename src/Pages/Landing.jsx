@@ -51,7 +51,10 @@ const Landing = () => {
               </Link>
             </div>
             <div className="bg-[#292929]  text-xl rounded-xl  cursor-pointer hover:bg-black duration-200 transition-all flex-1 border border-green-400">
-              <Link to={"/knowAll"} className="flex flex-col gap-6 px-8 py-4">
+              <Link
+                to={"/knowAll"}
+                className="flex flex-col gap-6 px-8 py-4 h-full"
+              >
                 <h1 className="text-center text-lg font-bold">
                   Comprehensive Legal Comparison
                 </h1>
