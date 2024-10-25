@@ -15,4 +15,8 @@ export const BNSS = [
     Section: "BNSS Section 217 to 482",
     Section_id: "4",
   },
+  {
+    Section: "SPECIFIC TIME LINE IN BNSS",
+    Section_id: "5",
+  },
 ];

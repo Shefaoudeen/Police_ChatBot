@@ -7,7 +7,7 @@ import { useGSAP } from "@gsap/react";
 const GetBNSDetails = () => {
   const [dataLoaded, SetDataLoaded] = useState(false);
   const { id } = useParams();
-  const [datas, SetDatas] = useState();
+  const [datas, SetDatas] = useState({});
   const [section_id, SetSection_id] = useState();
   const [sub_section_id, setSub_section_id] = useState();
   const modesName = [
@@ -37,8 +37,13 @@ const GetBNSDetails = () => {
   useEffect(() => {
     console.log(id);
     let ids = id.toString().split("_");
-    SetSection_id(parseInt(ids[0]));
-    setSub_section_id(parseInt(ids[1]));
+    SetSection_id(ids[0]);
+    setSub_section_id(ids[1]);
+    console.log(section_id);
+    console.log(sub_section_id);
+  }, []);
+
+  useEffect(() => {
     axios
       .get(
         `http://localhost:8000/mode-3/?section_id=${section_id}&sub_section_id=${sub_section_id}`
@@ -50,7 +55,8 @@ const GetBNSDetails = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [sub_section_id]);
+
   return (
     <div className="flex flex-col gap-10 justify-center items-center w-screen relative">
       <div className="absolute top-5 left-5">
@@ -96,13 +102,19 @@ const GetBNSDetails = () => {
                     {ele?.crime_description}
                     {ele?.part}
                   </h1>
-                  <h1>
+                  <h1
+                    className={`${
+                      ele?.provision_highlight || ele?.bns_punishment
+                        ? null
+                        : "hidden"
+                    }`}
+                  >
                     <span
                       className={
                         ele?.color === null ? "text-green-400" : "text-red-500"
                       }
                     >
-                      {section_id === 1
+                      {section_id == 1
                         ? "BNS Punishment :"
                         : "Prvision Highlight :"}
                     </span>

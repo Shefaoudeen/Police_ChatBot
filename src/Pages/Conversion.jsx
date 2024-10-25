@@ -26,9 +26,9 @@ const Conversion = () => {
     }
     axios
       .get(
-        `http://localhost:8000/mode-1/?section_id=${
+        `http://localhost:8000/mode-1/?section=${
           modes[modeNo1 - 1]
-        }&sub_section_id=${code}`
+        }&section_number=${code}`
       )
       .then((res) => {
         SetResponse([res.data, ...responses]);
@@ -133,7 +133,7 @@ const Conversion = () => {
               responses?.map((ele, index) => (
                 <tr
                   className={`text-center w-full ${
-                    ele?.color === null ? "bg-[#5a5757]" : "bg-red-500"
+                    ele?.color === null ? "bg-red-500" : "bg-[#5a5757]"
                   }`}
                   key={index}
                 >

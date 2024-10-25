@@ -17,41 +17,15 @@ const KnowAll = () => {
   const [modeSeleted, setModeSelected] = useState(1);
 
   useEffect(() => {
-    /*
     axios
-      .get(`http://localhost:8000/mode-3/?section_id=3&sub_section_id=$0`)
+      .get(`http://localhost:8000/mode-3/?section_id=3&sub_section_id=0`)
       .then((res) => {
         setBSA(res.data);
+        console.log(BSA);
       })
       .catch((err) => {
         console.log(err);
       });
-      */
-    setBSA({
-      section_id: "3",
-      sub_section_id: "3",
-      sections: [
-        {
-          serial_number: "1",
-          section_id: 3,
-          sub_section_number: "3",
-          crime_description:
-            "Evidence - including statements given electronically",
-          iea_section: "3",
-          bsa_section: "2(1)(e)",
-          color: null,
-        },
-        {
-          serial_number: "2",
-          section_id: 3,
-          sub_section_number: "3",
-          crime_description: "Confession irrelevant",
-          iea_section: "24",
-          bsa_section: "22",
-          color: "red",
-        },
-      ],
-    });
   }, []);
 
   return (
@@ -158,20 +132,24 @@ const KnowAll = () => {
                     </div>
                   </div>
                 ))
-              : modesSection[modeSeleted - 1].map((ele, ind) => (
-                  <div
-                    key={ind}
-                    className="bg-[#292929] text-xl max-md:text-sm p-5 transition-all duration-200
+              : modesSection[modeSeleted - 1].map((ele, ind) => {
+                  return (
+                    <div
+                      key={ind}
+                      className="bg-[#292929] text-xl max-md:text-sm p-5 transition-all duration-200
           rounded-3xl flex justify-between items-center border hover:border-green-400"
-                  >
-                    <h1>{ele.Section}</h1>
-                    <div className="bg-white hover:bg-green-400 cursor-pointer transition-all duration-200 rounded-full w-[30px] h-[30px] text-[#292929] flex justify-center items-center font-extrabold">
-                      <Link to={`/bnsDetails/${modeSeleted}_${ele.Section_id}`}>
-                        <img src={arrow} />
-                      </Link>
+                    >
+                      <h1>{ele.Section}</h1>
+                      <div className="bg-white hover:bg-green-400 cursor-pointer transition-all duration-200 rounded-full w-[30px] h-[30px] text-[#292929] flex justify-center items-center font-extrabold">
+                        <Link
+                          to={`/bnsDetails/${modeSeleted}_${ele.Section_id}`}
+                        >
+                          <img src={arrow} />
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
           </div>
         </div>
       </div>
