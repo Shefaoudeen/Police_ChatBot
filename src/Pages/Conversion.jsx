@@ -10,50 +10,45 @@ const Conversion = () => {
   const [code, setCode] = useState("");
   const [responses, SetResponse] = useState([]);
   const [submitted, SetSubmitted] = useState(false);
+  const [template, setTemplate] = useState();
 
   useEffect(() => {
-    console.log(modeNo1);
     if (modeNo1 % 2 == 0) {
       setMode2(modeNo1 - 1);
     } else if (modeNo1 % 2 == 1) {
       setMode2(modeNo1 + 1);
     }
-    console.log(mode2);
   }, [modeNo1]);
 
-  const handleSumbitButton = () => {
+  const EnterDetails = async (data) => {
+    console.log(data);
+    await SetResponse([
+      ...responses,
+      { type: modeNo1 % 2, mode1: modeNo1, mode2: mode2, result: data },
+    ]);
+    await console.log(responses);
+  };
+
+  const handleSumbitButton = async () => {
     if (code === "") {
       alert("Enter the Code Field");
       return;
-    } /*
-    axios
+    }
+    await axios
       .get(
         `http://localhost:8000/mode-1/?section=${
           modes[modeNo1 - 1]
         }&section_number=${code}`
       )
       .then((res) => {
-        SetResponse([res.data, ...responses]);
+        EnterDetails(res.data);
       })
       .catch((err) => {
         console.log(err);
-      });*/
-    SetResponse([
-      {
-        mode1: modes[modeNo1 - 1],
-        mode2: modes[mode2 - 1],
-        results: {
-          serial_number: "123",
-          crime_description: "shefa",
-          ipc_section: "",
-          bns_section: "",
-          bns_punishment: "",
-        },
-      },
-      ...responses,
-    ]);
+      });
+    setCode("");
+
     SetSubmitted(true);
-    console.log(submitted);
   };
 
   const swapMode = () => {
@@ -157,44 +152,55 @@ const Conversion = () => {
               <th className="w-[35%]">Punishment</th>
             </tr>
             {submitted ? (
-              responses?.map((ele, index) => (
-                <tr
-                  className={`text-center w-full ${
-                    ele?.color === null ? "bg-red-500" : "bg-[#5a5757]"
-                  }`}
-                  key={index}
-                >
-                  <td className="">{ele?.mode1}</td>
-                  <td className="">{ele?.mode2}</td>
-                  <td className="">
-                    {ele?.ipc_section}
-                    {ele?.iea_section}
-                    {ele?.crpc_section}
-                  </td>
-                  <td className="py-5">
-                    {ele?.bns_section}
-                    {ele?.bnss_section}
-                    {ele?.bsa_section}
-                  </td>
-                  <td className="px-4 py-2 text-justify">
-                    {ele?.results?.crime_description}
-                  </td>
-                  <td className="px-4 py-2 text-justify">
-                    <ul>
-                      <li>
-                        {ele?.result?.ipc_punishment}
-                        {ele?.result?.iea_punishment}
-                        {ele?.result?.crpc_punishment}
-                      </li>
-                      <li>
-                        {ele?.result?.bns_punishment}
-                        {ele?.result?.bnss_punishment}
-                        {ele?.result?.bsa_punishment}
-                      </li>
-                    </ul>
-                  </td>
-                </tr>
-              ))
+              responses?.map((ele, index) =>
+                ele?.result?.responses?.map((subele) => (
+                  <tr
+                    className={`text-center w-full ${
+                      subele?.color === null ? "bg-[#5a5757]" : "bg-red-500"
+                    }`}
+                    key={index}
+                  >
+                    <td className="">{modes[ele?.mode1 - 1]}</td>
+                    <td className="">{modes[ele?.mode2 - 1]}</td>
+                    <td className="">
+                      {ele?.type == 1
+                        ? subele?.bns_section ||
+                          subele?.bnss_section ||
+                          subele?.bsa_section
+                        : subele?.ipc_section ||
+                          subele?.iea_section ||
+                          subele?.crpc_section}
+                    </td>
+                    <td className="py-5">
+                      {ele?.type == 1
+                        ? subele?.ipc_section ||
+                          subele?.iea_section ||
+                          subele?.crpc_section
+                        : subele?.bns_section ||
+                          subele?.bnss_section ||
+                          subele?.bsa_section}
+                    </td>
+
+                    <td className="px-4 py-2 text-justify">
+                      {subele?.crime_description}
+                    </td>
+                    <td className="px-4 py-2 text-justify">
+                      <ul>
+                        <li>
+                          {subele?.ipc_punishment}
+                          {subele?.iea_punishment}
+                          {subele?.crpc_punishment}
+                        </li>
+                        <li>
+                          {subele?.bns_punishment}
+                          {subele?.bnss_punishment}
+                          {subele?.bsa_punishment}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                ))
+              )
             ) : (
               <tr className="bg-[#5a5757]">
                 <td></td>

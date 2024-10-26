@@ -45,7 +45,6 @@ const GetSectionDetails = () => {
   }, []);
 
   useEffect(() => {
-    /*
     axios
       .get(
         `http://localhost:8000/mode-3/?section_id=${section_id}&sub_section_id=${sub_section_id}`
@@ -56,7 +55,7 @@ const GetSectionDetails = () => {
       })
       .catch((err) => {
         console.log(err);
-      });*/
+      });
   }, [sub_section_id]);
 
   return (
