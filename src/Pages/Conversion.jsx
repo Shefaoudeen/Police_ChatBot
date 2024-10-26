@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Conversion = () => {
+  let navigation = useNavigate();
   const modes = ["BNS", "IPC", "BNSS", "CRPC", "BSA", "IEA"];
   const [modeNo1, setModeNo1] = useState(1);
   const [mode2, setMode2] = useState(2);
@@ -23,7 +25,7 @@ const Conversion = () => {
     if (code === "") {
       alert("Enter the Code Field");
       return;
-    }
+    } /*
     axios
       .get(
         `http://localhost:8000/mode-1/?section=${
@@ -35,7 +37,21 @@ const Conversion = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });*/
+    SetResponse([
+      {
+        mode1: modes[modeNo1 - 1],
+        mode2: modes[mode2 - 1],
+        results: {
+          serial_number: "123",
+          crime_description: "shefa",
+          ipc_section: "",
+          bns_section: "",
+          bns_punishment: "",
+        },
+      },
+      ...responses,
+    ]);
     SetSubmitted(true);
     console.log(submitted);
   };
@@ -46,6 +62,17 @@ const Conversion = () => {
 
   return (
     <div className="flex justify-center  w-full  relative py-10">
+      <div className="absolute top-5 left-5">
+        <button
+          className="bg-green-400 px-4 py-1 rounded-full"
+          onClick={() => {
+            navigation(-1);
+          }}
+        >
+          {" "}
+          {"<Back />"}
+        </button>
+      </div>
       <div className="absolute w-screen h-full">
         <div className="absolute right-20 bottom-20">
           <button
@@ -150,19 +177,19 @@ const Conversion = () => {
                     {ele?.bsa_section}
                   </td>
                   <td className="px-4 py-2 text-justify">
-                    {ele?.crime_description}
+                    {ele?.results?.crime_description}
                   </td>
                   <td className="px-4 py-2 text-justify">
                     <ul>
                       <li>
-                        {ele?.ipc_punishment}
-                        {ele?.iea_punishment}
-                        {ele?.crpc_punishment}
+                        {ele?.result?.ipc_punishment}
+                        {ele?.result?.iea_punishment}
+                        {ele?.result?.crpc_punishment}
                       </li>
                       <li>
-                        {ele?.bns_punishment}
-                        {ele?.bnss_punishment}
-                        {ele?.bsa_punishment}
+                        {ele?.result?.bns_punishment}
+                        {ele?.result?.bnss_punishment}
+                        {ele?.result?.bsa_punishment}
                       </li>
                     </ul>
                   </td>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { arrow } from "../assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BNS } from "../Data/BNS";
 import { BNSS } from "../Data/BNSS";
 import axios from "axios";
 
 const KnowAll = () => {
+  let navigation = useNavigate();
   const modesName = [
     "BHARATIYA NYAYA SANHITA (BNS)",
     "BHARATIYA NAGARIK SURAKSHA SANHITA (BNSS)",
@@ -29,7 +30,18 @@ const KnowAll = () => {
   }, []);
 
   return (
-    <div className="flex justify-center  w-full py-10">
+    <div className="flex justify-center  w-full py-10 relative">
+      <div className="absolute top-5 left-5">
+        <button
+          className="bg-green-400 px-4 py-1 rounded-full"
+          onClick={() => {
+            navigation(-1);
+          }}
+        >
+          {" "}
+          {"<Back />"}
+        </button>
+      </div>
       <div className="flex flex-col w-[75%] items-center gap-8 ">
         <h1 className="text-3xl poppins-regular">Important Sections</h1>
         <div className="flex gap-8">
@@ -142,7 +154,7 @@ const KnowAll = () => {
                       <h1>{ele.Section}</h1>
                       <div className="bg-white hover:bg-green-400 cursor-pointer transition-all duration-200 rounded-full w-[30px] h-[30px] text-[#292929] flex justify-center items-center font-extrabold">
                         <Link
-                          to={`/bnsDetails/${modeSeleted}_${ele.Section_id}`}
+                          to={`/knowAllDetail/${modeSeleted}_${ele.Section_id}`}
                         >
                           <img src={arrow} />
                         </Link>

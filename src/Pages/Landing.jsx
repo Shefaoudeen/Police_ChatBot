@@ -36,7 +36,7 @@ const Landing = () => {
             </div>
             <div className="bg-[#292929]  text-xl rounded-xl  cursor-pointer hover:bg-black duration-200 transition-all flex-1 border border-green-400">
               <Link
-                to={"/conversion"}
+                to={"/interactive"}
                 className="flex flex-col gap-6 px-8 py-4"
               >
                 <h1 className="text-center text-lg font-bold">

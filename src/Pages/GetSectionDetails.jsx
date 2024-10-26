@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const GetBNSDetails = () => {
+const GetSectionDetails = () => {
+  let navigation = useNavigate();
   const [dataLoaded, SetDataLoaded] = useState(false);
   const { id } = useParams();
   const [datas, SetDatas] = useState({});
@@ -44,6 +45,7 @@ const GetBNSDetails = () => {
   }, []);
 
   useEffect(() => {
+    /*
     axios
       .get(
         `http://localhost:8000/mode-3/?section_id=${section_id}&sub_section_id=${sub_section_id}`
@@ -54,18 +56,21 @@ const GetBNSDetails = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });*/
   }, [sub_section_id]);
 
   return (
     <div className="flex flex-col gap-10 justify-center items-center w-screen relative">
       <div className="absolute top-5 left-5">
-        <Link to={"/knowAll"}>
-          <button className="bg-green-400 px-4 py-1 rounded-full">
-            {" "}
-            {"<Back />"}
-          </button>
-        </Link>
+        <button
+          className="bg-green-400 px-4 py-1 rounded-full"
+          onClick={() => {
+            navigation(-1);
+          }}
+        >
+          {" "}
+          {"<Back />"}
+        </button>
       </div>
       <h1 className="font-medium text-2xl">
         {modesName[Number(section_id) - 1]} - Sub Section{" "}
@@ -205,4 +210,4 @@ const GetBNSDetails = () => {
   );
 };
 
-export default GetBNSDetails;
+export default GetSectionDetails;
