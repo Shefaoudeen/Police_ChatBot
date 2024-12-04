@@ -145,53 +145,59 @@ const Conversion = () => {
           <div className="md:hidden bg-[#222222] flex flex-col gap-4 p-2 text-sm rounded-xl">
             {submitted ? (
               responses?.map((ele, index) =>
-                ele?.result?.responses?.map((subele) => (
-                  <div
-                    className={`p-2 flex flex-col gap-2 rounded-lg ${
-                      subele?.color === null ? "bg-[#5a5757]" : "bg-red-500"
-                    }`}
-                  >
-                    <h1 className="text-center">
-                      {modes[ele?.mode1 - 1]} ⇌ {modes[ele?.mode2 - 1]}
-                    </h1>
-                    <h1>
-                      Code :{" "}
-                      {ele?.type == 1
-                        ? subele?.bns_section ||
-                          subele?.bnss_section ||
-                          subele?.bsa_section
-                        : subele?.ipc_section ||
-                          subele?.iea_section ||
-                          subele?.crpc_section}
-                    </h1>
-                    <h1>
-                      Alternative Code :{" "}
-                      {ele?.type == 1
-                        ? subele?.ipc_section ||
-                          subele?.iea_section ||
-                          subele?.crpc_section
-                        : subele?.bns_section ||
-                          subele?.bnss_section ||
-                          subele?.bsa_section}
-                    </h1>
-                    <h1>Crime Description : {subele?.crime_description}</h1>
-                    <h1>
-                      Punishment :{" "}
-                      <ul>
-                        <li>
-                          {subele?.ipc_punishment}
-                          {subele?.iea_punishment}
-                          {subele?.crpc_punishment}
-                        </li>
-                        <li>
-                          {subele?.bns_punishment}
-                          {subele?.bnss_punishment}
-                          {subele?.bsa_punishment}
-                        </li>
-                      </ul>
-                    </h1>
+                ele?.message === "No matching section found" ? (
+                  <div className="bg-[#2b2b2b] p-2 flex flex-col gap-2 rounded-lg">
+                    <h1 className="text-center">Invalid Code</h1>
                   </div>
-                ))
+                ) : (
+                  ele?.result?.responses?.map((subele) => (
+                    <div
+                      className={`p-2 flex flex-col gap-2 rounded-lg ${
+                        subele?.color === null ? "bg-[#5a5757]" : "bg-red-500"
+                      }`}
+                    >
+                      <h1 className="text-center">
+                        {modes[ele?.mode1 - 1]} ⇌ {modes[ele?.mode2 - 1]}
+                      </h1>
+                      <h1>
+                        Code :{" "}
+                        {ele?.type == 1
+                          ? subele?.bns_section ||
+                            subele?.bnss_section ||
+                            subele?.bsa_section
+                          : subele?.ipc_section ||
+                            subele?.iea_section ||
+                            subele?.crpc_section}
+                      </h1>
+                      <h1>
+                        Alternative Code :{" "}
+                        {ele?.type == 1
+                          ? subele?.ipc_section ||
+                            subele?.iea_section ||
+                            subele?.crpc_section
+                          : subele?.bns_section ||
+                            subele?.bnss_section ||
+                            subele?.bsa_section}
+                      </h1>
+                      <h1>Crime Description : {subele?.crime_description}</h1>
+                      <h1>
+                        Punishment :{" "}
+                        <ul>
+                          <li>
+                            {subele?.ipc_punishment}
+                            {subele?.iea_punishment}
+                            {subele?.crpc_punishment}
+                          </li>
+                          <li>
+                            {subele?.bns_punishment}
+                            {subele?.bnss_punishment}
+                            {subele?.bsa_punishment}
+                          </li>
+                        </ul>
+                      </h1>
+                    </div>
+                  ))
+                )
               )
             ) : (
               <div className="bg-[#2b2b2b] p-2 flex flex-col gap-2 rounded-lg">
@@ -218,53 +224,64 @@ const Conversion = () => {
             </tr>
             {submitted ? (
               responses?.map((ele, index) =>
-                ele?.result?.responses?.map((subele) => (
-                  <tr
-                    className={`text-center w-full ${
-                      subele?.color === null ? "bg-[#5a5757]" : "bg-red-500"
-                    }`}
-                    key={index}
-                  >
-                    <td className="">{modes[ele?.mode1 - 1]}</td>
-                    <td className="">{modes[ele?.mode2 - 1]}</td>
-                    <td className="">
-                      {ele?.type == 1
-                        ? subele?.bns_section ||
-                          subele?.bnss_section ||
-                          subele?.bsa_section
-                        : subele?.ipc_section ||
-                          subele?.iea_section ||
-                          subele?.crpc_section}
-                    </td>
-                    <td className="py-5">
-                      {ele?.type == 1
-                        ? subele?.ipc_section ||
-                          subele?.iea_section ||
-                          subele?.crpc_section
-                        : subele?.bns_section ||
-                          subele?.bnss_section ||
-                          subele?.bsa_section}
-                    </td>
-
-                    <td className="px-4 py-2 text-justify">
-                      {subele?.crime_description}
-                    </td>
-                    <td className="px-4 py-2 text-justify">
-                      <ul>
-                        <li>
-                          {subele?.ipc_punishment}
-                          {subele?.iea_punishment}
-                          {subele?.crpc_punishment}
-                        </li>
-                        <li>
-                          {subele?.bns_punishment}
-                          {subele?.bnss_punishment}
-                          {subele?.bsa_punishment}
-                        </li>
-                      </ul>
-                    </td>
+                ele?.message === "No matching section found" ? (
+                  <tr className="bg-[#5a5757]">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td className="py-5">--- Invalid Code ---</td>
+                    <td></td>
                   </tr>
-                ))
+                ) : (
+                  ele?.result?.responses?.map((subele) => (
+                    <tr
+                      className={`text-center w-full ${
+                        subele?.color === null ? "bg-[#5a5757]" : "bg-red-500"
+                      }`}
+                      key={index}
+                    >
+                      <td className="">{modes[ele?.mode1 - 1]}</td>
+                      <td className="">{modes[ele?.mode2 - 1]}</td>
+                      <td className="">
+                        {ele?.type == 1
+                          ? subele?.bns_section ||
+                            subele?.bnss_section ||
+                            subele?.bsa_section
+                          : subele?.ipc_section ||
+                            subele?.iea_section ||
+                            subele?.crpc_section}
+                      </td>
+                      <td className="py-5">
+                        {ele?.type == 1
+                          ? subele?.ipc_section ||
+                            subele?.iea_section ||
+                            subele?.crpc_section
+                          : subele?.bns_section ||
+                            subele?.bnss_section ||
+                            subele?.bsa_section}
+                      </td>
+
+                      <td className="px-4 py-2 text-justify">
+                        {subele?.crime_description}
+                      </td>
+                      <td className="px-4 py-2 text-justify">
+                        <ul>
+                          <li>
+                            {subele?.ipc_punishment}
+                            {subele?.iea_punishment}
+                            {subele?.crpc_punishment}
+                          </li>
+                          <li>
+                            {subele?.bns_punishment}
+                            {subele?.bnss_punishment}
+                            {subele?.bsa_punishment}
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  ))
+                )
               )
             ) : (
               <tr className="bg-[#5a5757]">
