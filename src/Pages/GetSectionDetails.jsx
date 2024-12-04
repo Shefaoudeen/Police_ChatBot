@@ -71,7 +71,7 @@ const GetSectionDetails = () => {
           {"<Back />"}
         </button>
       </div>
-      <h1 className="font-medium text-2xl">
+      <h1 className="font-medium text-2xl max-md:text-sm text-center">
         {modesName[Number(section_id) - 1]} - Sub Section{" "}
         {datas?.sub_section_id}
       </h1>
@@ -197,7 +197,7 @@ const GetSectionDetails = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-[#292929] w-[50%] p-8 text-xl rounded-xl flex flex-col gap-5 ">
+        <div className="bg-[#292929] w-[50%] p-8 text-xl rounded-xl flex flex-col gap-5 max-md:w-[80%]">
           <div className="bg-[#8f8f8f] min-w-[20%] max-w-[20%] min-h-[30px] rounded-xl msgBox" />
           <div className="flex flex-col gap-5 items-end">
             <div className="bg-[#8f8f8f] min-w-[90%] max-w-[90%] min-h-[30px] rounded-xl msgBox" />

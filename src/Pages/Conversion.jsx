@@ -85,38 +85,40 @@ const Conversion = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-4 max-w-[80%] min-w-[80%] items-center">
+      <div className="flex flex-col gap-4 max-w-[80%] min-w-[80%] items-center max-md:pt-10 max-md:min-w-[90%]">
         <div className="bg-[#171717] px-8 py-2 rounded-xl flex flex-col items-center gap-4 w-full sticky top-[50px]">
           <h1 className="text-xl font-bold">Code Conversion</h1>
-          <div className="flex items-center gap-8">
-            <div className="flex gap-4 items-center">
-              <label>Mode 1</label>
-              <select
-                name="code1"
-                id="code1"
-                className="text-black"
-                value={modeNo1}
-                onChange={(e) => {
-                  setModeNo1(parseInt(e.target.value));
-                }}
-              >
-                <option value="1">BNS</option>
-                <option value="2">IPC</option>
-                <option value="3">BNSS</option>
-                <option value="4">CRPC</option>
-                <option value="5">BSA</option>
-                <option value="6">IEA</option>
-              </select>
-            </div>
-            <div className="flex items-center hover:text-green-400 cursor-pointer">
-              <h1 className="text-3xl" onClick={() => swapMode()}>
-                ⇌
-              </h1>
-            </div>
-            <div className="flex gap-4 items-center">
-              <label>Mode 2</label>
-              <div className="bg-white text-black px-2 rounded">
-                {modes[mode2 - 1]}
+          <div className="flex gap-4 items-center max-md:flex-col">
+            <div className="flex items-center gap-8 max-md:text-sm">
+              <div className="flex gap-4 items-center">
+                <label className="w-max">Mode 1</label>
+                <select
+                  name="code1"
+                  id="code1"
+                  className="text-black"
+                  value={modeNo1}
+                  onChange={(e) => {
+                    setModeNo1(parseInt(e.target.value));
+                  }}
+                >
+                  <option value="1">BNS</option>
+                  <option value="2">IPC</option>
+                  <option value="3">BNSS</option>
+                  <option value="4">CRPC</option>
+                  <option value="5">BSA</option>
+                  <option value="6">IEA</option>
+                </select>
+              </div>
+              <div className="flex items-center hover:text-green-400 cursor-pointer">
+                <h1 className="text-3xl" onClick={() => swapMode()}>
+                  ⇌
+                </h1>
+              </div>
+              <div className="flex gap-4 items-center">
+                <label className="w-max">Mode 2</label>
+                <div className="bg-white text-black px-2 rounded">
+                  {modes[mode2 - 1]}
+                </div>
               </div>
             </div>
             <div className="flex gap-4">
@@ -140,8 +142,67 @@ const Conversion = () => {
         </div>
 
         <div className="flex flex-1 flex-col w-full">
+          <div className="md:hidden bg-[#222222] flex flex-col gap-4 p-2 text-sm rounded-xl">
+            {submitted ? (
+              responses?.map((ele, index) =>
+                ele?.result?.responses?.map((subele) => (
+                  <div className="bg-[#2b2b2b] p-2 flex flex-col gap-2 rounded-lg">
+                    <h1>Mode 1 : {modes[ele?.mode1 - 1]}</h1>
+                    <h1>Mode 2 : {modes[ele?.mode2 - 1]}</h1>
+                    <h1>
+                      Code :{" "}
+                      {ele?.type == 1
+                        ? subele?.bns_section ||
+                          subele?.bnss_section ||
+                          subele?.bsa_section
+                        : subele?.ipc_section ||
+                          subele?.iea_section ||
+                          subele?.crpc_section}
+                    </h1>
+                    <h1>
+                      Alternative Code :{" "}
+                      {ele?.type == 1
+                        ? subele?.ipc_section ||
+                          subele?.iea_section ||
+                          subele?.crpc_section
+                        : subele?.bns_section ||
+                          subele?.bnss_section ||
+                          subele?.bsa_section}
+                    </h1>
+                    <h1>Crime Description : {subele?.crime_description}</h1>
+                    <h1>
+                      Punishment :{" "}
+                      <ul>
+                        <li>
+                          {subele?.ipc_punishment}
+                          {subele?.iea_punishment}
+                          {subele?.crpc_punishment}
+                        </li>
+                        <li>
+                          {subele?.bns_punishment}
+                          {subele?.bnss_punishment}
+                          {subele?.bsa_punishment}
+                        </li>
+                      </ul>
+                    </h1>
+                  </div>
+                ))
+              )
+            ) : (
+              <div className="bg-[#2b2b2b] p-2 flex flex-col gap-2 rounded-lg">
+                <h1>Mode 1 : --No Details--</h1>
+                <h1>Mode 2 : --No Details--</h1>
+                <h1>Code : --No Details--</h1>
+                <h1>Alternative Code : --No Details--</h1>
+                <h1>Crime Description : --No Details--</h1>
+                <h1>Punishment : --No Details--</h1>
+              </div>
+            )}
+          </div>
           <table
-            className={`text-center ${submitted ? "border-separate" : ""}`}
+            className={`text-center ${
+              submitted ? "border-separate" : ""
+            } max-md:hidden`}
           >
             <tr className="bg-[#2b2b2b] text-sm">
               <th className="w-[7.5%]">Mode 1</th>

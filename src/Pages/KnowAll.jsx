@@ -42,9 +42,9 @@ const KnowAll = () => {
           {"<Back />"}
         </button>
       </div>
-      <div className="flex flex-col w-[75%] items-center gap-8 ">
+      <div className="flex flex-col w-[75%] max-md:w-[100%] items-center gap-8 max-md:gap-5 max-md:pt-8">
         <h1 className="text-3xl poppins-regular">Important Sections</h1>
-        <div className="flex gap-8">
+        <div className="flex gap-8 max-md:gap-5">
           <button
             className={`${
               modeSeleted === 1 ? "bg-green-400" : "bg-[#171717]"
@@ -72,13 +72,13 @@ const KnowAll = () => {
             BSA
           </button>
         </div>
-        <div className="text-center w-[75%]">
+        <div className="text-center w-[75%] max-md:w-[100%] flex flex-col items-center justify-center">
           <h1>
             <h1 className="font-bold text-xl pb-10">
               {modesName[modeSeleted - 1]}
             </h1>
           </h1>
-          <div className="flex flex-col gap-5 w-full max-md:w-[90%]">
+          <div className="flex flex-col gap-5 w-full max-md:w-[95%]">
             {modeSeleted === 3
               ? BSA?.sections?.map((ele, ind) => (
                   <div
@@ -149,14 +149,14 @@ const KnowAll = () => {
                     <div
                       key={ind}
                       className="bg-[#292929] text-xl max-md:text-sm p-5 transition-all duration-200
-          rounded-3xl flex justify-between items-center border hover:border-green-400"
+          rounded-3xl flex justify-between items-center border gap-4 hover:border-green-400"
                     >
-                      <h1>{ele.Section}</h1>
+                      <h1 className="text-start">{ele.Section}</h1>
                       <div className="bg-white hover:bg-green-400 cursor-pointer transition-all duration-200 rounded-full w-[30px] h-[30px] text-[#292929] flex justify-center items-center font-extrabold">
                         <Link
                           to={`/knowAllDetail/${modeSeleted}_${ele.Section_id}`}
                         >
-                          <img src={arrow} />
+                          <img src={arrow} className="min-w-[30px]" />
                         </Link>
                       </div>
                     </div>

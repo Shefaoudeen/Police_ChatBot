@@ -57,8 +57,8 @@ const InteractiveSession = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full relative ">
-      <div className="w-[75%] relative">
+    <div className="flex flex-col justify-center items-center w-full h-screen relative">
+      <div className="w-[75%] relative min-h-[50vh]">
         <div className="py-5 flex flex-col gap-6">
           {responses.map((ele, index) => (
             <div className="flex flex-col gap-4">
@@ -81,21 +81,21 @@ const InteractiveSession = () => {
             </div>
           ))}
         </div>
-        <div className="sticky bottom-[50px] bg-opacity-50">
-          <div className="px-5 py-4 flex gap-8 bg-[#171717]/65 rounded-xl">
-            <input
-              type="text"
-              value={question}
-              onChange={handleChange}
-              className="w-full py-2 rounded-xl text-black px-2"
-            />
-            <button
-              className="bg-green-400 p-2  rounded-lg"
-              onClick={() => handleSumbitButton()}
-            >
-              Send
-            </button>
-          </div>
+      </div>
+      <div className="sticky bottom-[100px] bg-opacity-50 w-[75%] max-md:w-[90%]">
+        <div className="px-5 py-4 flex gap-8 bg-[#171717]/65 rounded-xl">
+          <input
+            type="text"
+            value={question}
+            onChange={handleChange}
+            className="w-full py-2 rounded-xl text-black px-2"
+          />
+          <button
+            className="bg-green-400 p-2  rounded-lg"
+            onClick={() => handleSumbitButton()}
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>

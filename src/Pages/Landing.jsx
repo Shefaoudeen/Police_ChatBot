@@ -4,21 +4,21 @@ import { Link } from "react-router-dom";
 const Landing = () => {
   return (
     <div className="flex justify-center items-center w-full">
-      <div className="flex flex-col items-center gap-8">
-        <h1 className="text-slate-200 max-md:text-xs max-md:w-[75%]">
+      <div className="flex flex-col items-center gap-8 text-center">
+        <h1 className="text-slate-200 max-md:text-sm max-md:pt-10 max-md:w-[75%]">
           Hi I'm JAC. Your jucial companion.{" "}
         </h1>
-        <h1 className="text-6xl text-center leading-12 tracking-tight poppins-medium ">
+        <h1 className="text-6xl text-center leading-12 tracking-tight poppins-medium max-md:text-2xl">
           Get answers. Find Justice.
           <br /> Be more responsible.
         </h1>
-        <h1 className="text-xl poppins-extralight">
+        <h1 className="text-xl poppins-extralight max-md:text-sm max-md:px-5">
           This system designed to support legal professionals, courts, or
           individuals in handling judicial processes
         </h1>
 
-        <div className="flex flex-col items-center gap-4  p-6 rounded-2xl max-w-[80%] text-justify ">
-          <div className="flex  gap-8 flex-row">
+        <div className="flex flex-col items-center gap-4  p-6 rounded-2xl max-w-[80%] max-md:max-w-[90%] text-justify ">
+          <div className="flex  gap-8 flex-row max-md:flex-col">
             <div className="bg-[#292929]  text-xl rounded-xl  cursor-pointer hover:bg-black duration-200 transition-all flex-1 border border-green-400 hover:border-2 ease-linear">
               <Link
                 to={"/conversion"}
