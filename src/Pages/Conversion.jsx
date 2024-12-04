@@ -146,9 +146,14 @@ const Conversion = () => {
             {submitted ? (
               responses?.map((ele, index) =>
                 ele?.result?.responses?.map((subele) => (
-                  <div className="bg-[#2b2b2b] p-2 flex flex-col gap-2 rounded-lg">
-                    <h1>Mode 1 : {modes[ele?.mode1 - 1]}</h1>
-                    <h1>Mode 2 : {modes[ele?.mode2 - 1]}</h1>
+                  <div
+                    className={`p-2 flex flex-col gap-2 rounded-lg ${
+                      subele?.color === null ? "bg-[#5a5757]" : "bg-red-500"
+                    }`}
+                  >
+                    <h1 className="text-center">
+                      {modes[ele?.mode1 - 1]} ⇌ {modes[ele?.mode2 - 1]}
+                    </h1>
                     <h1>
                       Code :{" "}
                       {ele?.type == 1
@@ -190,8 +195,7 @@ const Conversion = () => {
               )
             ) : (
               <div className="bg-[#2b2b2b] p-2 flex flex-col gap-2 rounded-lg">
-                <h1>Mode 1 : --No Details--</h1>
-                <h1>Mode 2 : --No Details--</h1>
+                <h1 className="text-center">Mode 1 ⇌ Mode 2</h1>
                 <h1>Code : --No Details--</h1>
                 <h1>Alternative Code : --No Details--</h1>
                 <h1>Crime Description : --No Details--</h1>
