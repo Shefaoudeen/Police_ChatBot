@@ -20,13 +20,24 @@ const Conversion = () => {
     }
   }, [modeNo1]);
 
-  const EnterDetails = async (data) => {
+  const EnterDetails = (data) => {
     console.log(data);
-    await SetResponse([
-      ...responses,
-      { type: modeNo1 % 2, mode1: modeNo1, mode2: mode2, result: data },
+    SetResponse((prevResponses) => [
+      ...prevResponses,
+      data?.message === "No matching section found"
+        ? {
+            type: modeNo1 % 2,
+            mode1: modeNo1,
+            mode2: mode2,
+            result: { message: "No matching Section found" },
+          }
+        : {
+            type: modeNo1 % 2,
+            mode1: modeNo1,
+            mode2: mode2,
+            result: data,
+          },
     ]);
-    await console.log(responses);
   };
 
   const handleSumbitButton = async () => {
@@ -49,6 +60,7 @@ const Conversion = () => {
     setCode("");
 
     SetSubmitted(true);
+    console.log(responses);
   };
 
   const swapMode = () => {

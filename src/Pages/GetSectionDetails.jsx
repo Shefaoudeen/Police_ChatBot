@@ -59,7 +59,7 @@ const GetSectionDetails = () => {
   }, [sub_section_id]);
 
   return (
-    <div className="flex flex-col gap-10 justify-center items-center w-screen relative">
+    <div className="flex flex-col gap-10 py-20 justify-center items-center w-screen relative">
       <div className="absolute top-5 left-5">
         <button
           className="bg-green-400 px-4 py-1 rounded-full"
@@ -76,7 +76,7 @@ const GetSectionDetails = () => {
         {datas?.sub_section_id}
       </h1>
       {dataLoaded ? (
-        <div className=" w-[50%] p-8 rounded-xl flex flex-col gap-5 items-center justify-center py-[50px]">
+        <div className=" w-[50%] max-md:w-[100%] px-8 rounded-xl flex flex-col gap-5 items-center justify-center md:py-[50px]">
           <div className="w-full py-5">
             <div className="flex flex-col gap-4">
               {datas?.sections.map((ele, ind) => (

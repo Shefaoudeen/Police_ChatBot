@@ -24,10 +24,12 @@ const Navbar = () => {
           <img src={Home} className="max-w-[30px] max-md:max-w-[20px]" alt="" />
         </Link>
       </div>
-      <h1 className="text-2xl font-semibold  tracking-widest p-5 max-md:text-xl">
-        <span className="text-3xl max-md:text-2xl">P</span>UDUCHERRY{" "}
-        <span className="text-3xl max-md:text-2xl">P</span>OLICE
-      </h1>
+      <a href="https://police.py.gov.in/" target="_blank">
+        <h1 className="text-2xl font-semibold  tracking-widest p-5 max-md:text-xl">
+          <span className="text-3xl max-md:text-2xl">P</span>UDUCHERRY{" "}
+          <span className="text-3xl max-md:text-2xl">P</span>OLICE
+        </h1>
+      </a>
     </div>
   );
 };
